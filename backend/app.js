@@ -6,9 +6,13 @@ var logger = require("morgan");
 
 const mongoose = require("mongoose");
 const config = require("./config");
-const url = config.mongoUrl;
-const connect = mongoose.connect(url);
 
+// const prompt = require("prompt-sync")({ sigint: true });
+// const pass = prompt.hide("Mongo password:");
+// const url = config.mongoUrl(pass);
+const url = config.mongoUrl('elchulo14_');
+
+const connect = mongoose.connect(url);
 var indexRouter = require("./routes/index");
 var jokesRouter = require("./routes/jokes");
 
@@ -18,20 +22,16 @@ connect.then(
   },
   (err) => {
     console.log(err);
+    process.exit()
   }
 );
 
 var app = express();
 
-// view engine setup
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "jade");
-
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/", indexRouter);
 app.use("/jokes", jokesRouter);
