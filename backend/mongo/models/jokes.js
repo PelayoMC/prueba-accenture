@@ -6,7 +6,7 @@ const jokesSchema = new Schema(
     setup: {
       type: String,
       required: true,
-      unique: true
+      unique: true,
     },
     punchline: {
       type: String,
