@@ -9,13 +9,10 @@ function App() {
   const api = new Api();
 
   useEffect(() => {
-    api
-      .loadJoke()
-      .then((response) => console.log(response))
-      .then(() => fetchData())
-      .catch((err) => console.log(err));
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   const handleClick = () => {
     setShow(!show);
     if (show) fetchData();
@@ -24,10 +21,25 @@ function App() {
   const fetchData = () => {
     api
       .getJoke()
-      .then((response) => console.log(response))
-      .then((response) => response.json())
-      .then((response) => setData(response.joke))
+      .then((response) => response.data)
+      .then((response) => {
+        if (response) setData(response);
+        else
+          api
+            .loadJokes()
+            .then((response) => response.data)
+            .then((response) => {
+              setShow(!show);
+              setData(response);
+            })
+            .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
+    // api
+    //   .getJoke()
+    //   .then((response) => response.data)
+    //   .then((response) => setData(response))
+    //   .catch((err) => console.log(err));
   };
 
   // const fetchData = async () => {

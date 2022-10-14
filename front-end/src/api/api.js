@@ -12,12 +12,10 @@ export default class Api {
     });
     return this.client;
   };
-  getJoke = (params) => {
-    return this.init().get("/jokes", {
-      id: this.randomIntFromInterval(1, 410),
-    });
+  getJoke = () => {
+    return this.init().get("/jokes");
   };
-  loadJokes = (data) => {
+  loadJokes = () => {
     return this.init().post("/jokes");
   };
 }

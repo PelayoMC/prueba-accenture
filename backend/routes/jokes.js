@@ -6,6 +6,7 @@ const Jokes = require("../mongo/models/jokes");
 const cors = require("./cors");
 
 const jokes = express.Router();
+const rand = () => parseInt(Math.random() * 410 + 1);
 
 jokes.use(bodyParser.json());
 
@@ -23,9 +24,9 @@ jokes
     Jokes.find({})
       .then(
         (jokes) => {
-          let rand = parseInt(Math.random() * 410 + 1);
-          console.log(rand);
-          res.json(jokes[rand]);
+          let randon = rand();
+          console.log(randon);
+          res.json(jokes[randon]);
         },
         (err) => next(err)
       )
@@ -35,17 +36,12 @@ jokes
     fetch(config.urlJokes, { method: "Get" })
       .then((res) => res.json())
       .then((json) => {
-        Jokes.deleteMany({})
+        Jokes.insertMany(json)
+          // Jokes.collection
+          //   .drop({})
           .then(
-            (resp) => {
-              Jokes.insertMany(json)
-                .then(
-                  (jokes) => {
-                    res.json(resp);
-                  },
-                  (err) => next(err)
-                )
-                .catch((err) => next(err));
+            (jokes) => {
+              res.json(jokes[rand()]);
             },
             (err) => next(err)
           )
