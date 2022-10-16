@@ -1,13 +1,14 @@
 var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
-var cookieParser = require("cookie-parser");
+var prompt = require("prompt-sync")({ sigint: true });
 var logger = require("morgan");
 
 const mongoose = require("mongoose");
 const config = require("./config");
 
-const url = config.mongoUrl("elchulo14_");
+const psw = prompt.hide("Insert password: ");
+const url = config.mongoUrl(psw);
 
 const connect = mongoose.connect(url);
 var indexRouter = require("./routes/index");
