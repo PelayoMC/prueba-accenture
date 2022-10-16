@@ -4,26 +4,41 @@
   justify-content: center;
   width: 100%;
   height: 100vh;
-  /* background-image: url("../../../../../Downloads/wp.jpg"); */
+  background-image: url("../public/wp.jpg");
   background-repeat: no-repeat;
   background-position: left bottom;
-  background-size: 40% 50%;
+  background-size: 500px 400px;
   background-color: #000a13;
   color: white;
 }
 
+.loader {
+  border: 5px solid #f3f3f3; /* Light grey */
+  border-top: 5px solid grey;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .card {
-  /* Add shadows to create the "card" effect */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   transition: 0.3s;
 }
 
-/* On mouse-over, add a deeper shadow */
 .card:hover {
   box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
 }
 
-/* Add some padding inside the card container */
 .container {
   padding: 2px 16px;
 }

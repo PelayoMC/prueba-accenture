@@ -7,10 +7,7 @@ var logger = require("morgan");
 const mongoose = require("mongoose");
 const config = require("./config");
 
-// const prompt = require("prompt-sync")({ sigint: true });
-// const pass = prompt.hide("Mongo password:");
-// const url = config.mongoUrl(pass);
-const url = config.mongoUrl('elchulo14_');
+const url = config.mongoUrl("elchulo14_");
 
 const connect = mongoose.connect(url);
 var indexRouter = require("./routes/index");
@@ -22,7 +19,7 @@ connect.then(
   },
   (err) => {
     console.log(err);
-    process.exit()
+    process.exit();
   }
 );
 
@@ -34,7 +31,6 @@ app.set("view engine", "jade");
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-// app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/jokes", jokesRouter);

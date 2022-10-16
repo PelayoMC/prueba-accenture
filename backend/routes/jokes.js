@@ -37,8 +37,6 @@ jokes
       .then((res) => res.json())
       .then((json) => {
         Jokes.insertMany(json)
-          // Jokes.collection
-          //   .drop({})
           .then(
             (jokes) => {
               res.json(jokes[rand()]);

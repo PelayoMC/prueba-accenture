@@ -6,6 +6,7 @@ import Api from "./api/api";
 function App() {
   const [show, setShow] = useState(false);
   const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(null);
   const api = new Api();
 
   useEffect(() => {
@@ -14,15 +15,20 @@ function App() {
   }, []);
 
   const handleClick = () => {
+    console.log(!show);
     setShow(!show);
-    if (show) fetchData();
+    if (show) {
+      fetchData();
+    }
   };
 
-  const fetchData = () => {
+  const fetchData = async () => {
+    setLoading(true);
     api
       .getJoke()
       .then((response) => response.data)
       .then((response) => {
+        console.log(response);
         if (response) setData(response);
         else
           api
@@ -32,27 +38,20 @@ function App() {
               setShow(!show);
               setData(response);
             })
+            .finally(() => setLoading(false))
             .catch((err) => console.log(err));
       })
+      .finally(() => setLoading(false))
       .catch((err) => console.log(err));
-    // api
-    //   .getJoke()
-    //   .then((response) => response.data)
-    //   .then((response) => setData(response))
-    //   .catch((err) => console.log(err));
   };
-
-  // const fetchData = async () => {
-  //   await fetch(`http://localhost:3001/jokes`)
-  //     .then((response) => response.json())
-  //     .then((response) => {
-  //       setData(response.joke);
-  //     });
-  // };
 
   return (
     <button className="App" onClick={handleClick}>
-      <Card data={data} show={show}></Card>
+      {!loading ? (
+        <Card data={data} show={show}></Card>
+      ) : (
+        <div className="loader"></div>
+      )}
     </button>
   );
 }
